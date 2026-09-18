@@ -145,7 +145,7 @@ function nextRound() {
     Object.values(teams).forEach(t => { t.progress = 0; t.total = currentTokens.length; });
     renderTeamBoards();
 
-    questionCounter.textContent = `Song ${currentIndex + 1} / ${SONGS.length}`;
+    questionCounter.textContent = levelLabel(song);
 
     if (channel) {
         channel.publish("round_start", { index: currentIndex, total: SONGS.length });
@@ -172,13 +172,14 @@ function handleSolved(data) {
     if (data.questionIndex !== currentIndex || roundLocked || !teams[data.playerId]) return;
     roundLocked = true;
 
-    teams[data.playerId].score++;
+    const song = SONGS[currentIndex];
+    teams[data.playerId].score += song.points;
     teams[data.playerId].progress = teams[data.playerId].total;
     renderTeamBoards();
 
-    const song = SONGS[currentIndex];
     const winnerName = teams[data.playerId].name;
-    showReveal(`🏆 ${winnerName} solved it first!`, song);
+    const pointsNote = song.points > 0 ? ` (+${song.points} pt${song.points === 1 ? "" : "s"})` : " (practice round — no points)";
+    showReveal(`🏆 ${winnerName} solved it first!${pointsNote}`, song);
 
     channel && channel.publish("round_result", {
         questionIndex: currentIndex,

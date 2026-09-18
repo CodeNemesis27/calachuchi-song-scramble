@@ -20,13 +20,18 @@ line of a hymn back into the correct order.
 5. A wrong tap resets that team's board — all tapped words go back into
    the scramble, and they start again from the first word. (Only that
    team resets — the other team's progress is untouched.)
-6. First team to rebuild the full line correctly wins the round and a
-   point — there's no timer, so a round stays open until someone solves
-   it. (If a line stumps both teams, the host can tap **Skip to Next
-   Song** to move on without awarding a point.) The host screen reveals
-   the hymn title either way, so it stays educational regardless of the
-   outcome.
-7. After all rounds, the host screen shows the final score and winner.
+6. First team to rebuild the full line correctly wins the round — there's
+   no timer, so a round stays open until someone solves it. (If a line
+   stumps both teams, the host can tap **Skip to Next Song** to move on
+   without awarding points.) The host screen reveals the hymn title
+   either way, so it stays educational regardless of the outcome.
+7. The game runs through a fixed difficulty ladder: a **Trial** round
+   first (free practice, worth 0 points), then **Easy** (1 point),
+   **Normal** (3 points), and **Hard** (5 points) rounds in that order.
+   Both the host screen and each team's phone show the current tier and
+   its point value (e.g. "Hard 2/5 · 5 pts").
+8. After all rounds, the host screen shows the final total score and
+   winner.
 
 ## 1. Get a free PieSocket key (2 minutes)
 
@@ -79,21 +84,33 @@ vercel
 4. Each round stays open until a team finishes it. The host screen shows
    both teams' sentences filling in live, word by word, plus an activity
    feed ("Team B slipped up and had to restart!").
-5. After 5 rounds, tap **Play Again** on the host screen to reset scores
-   and go again with the same room code.
+5. After all 15 rounds (1 trial + 4 easy + 5 normal + 5 hard), tap
+   **Play Again** on the host screen to reset scores and go again with
+   the same room code.
 
 ## Customizing the songs
 
-Open `shared.js` and edit the `SONGS` array. `line` is what gets
-scrambled; `title` is revealed after each round:
+Open `shared.js` and edit the `SONGS` array. Each entry has:
+- `level` — "Trial", "Easy", "Normal", or "Hard" (just a label — the game
+  plays through the array in the order you list, it doesn't reorder by
+  level name)
+- `points` — how many points a win in that round is worth
+- `line` — the sentence that gets scrambled
+- `title` — the hymn title, revealed after the round
 
 ```js
-{ line: "I sing the goodness of the Lord who filled the Earth with food", title: "I Sing the Mighty Power of God" },
+{ level: "Easy", points: 1, line: "To God be the glory Great things he hath done", title: "To God Be the Glory" },
 ```
 
-The 5 starter lines are all from hymns written well over a century ago
-(Isaac Watts, John Newton, Fanny Crosby, etc.), so they're safely in the
-public domain — feel free to add more from your own hymnal the same way.
+Add, remove, or reorder rounds freely — the difficulty ladder is just
+whatever order you put them in. All 15 starter lines are hymns from the
+1700s–1800s (or 1923, which is public domain in the US as of 2019), so
+they're safe to use freely. One well-known exception was deliberately
+left out: **"How Great Thou Art"** — the widely-sung English lyrics
+(translated by Stuart K. Hine in 1949) are still under active copyright,
+so that one isn't included here. Feel free to add it yourself if your
+church's licensing covers it, or swap in another public-domain hymn from
+your own hymnal the same way.
 
 You can also change, in `shared.js`:
 - `NEXT_ROUND_DELAY_MS` — how long the reveal stays up before the next

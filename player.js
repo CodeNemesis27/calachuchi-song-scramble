@@ -98,7 +98,7 @@ function startRound() {
   builtCount = 0;
   locked = false;
 
-  questionCounterP.textContent = `Song ${currentIndex + 1}/${SONGS.length}`;
+  questionCounterP.textContent = levelLabel(song);
   statusP.textContent = "Go! Tap the first word.";
 
   renderSentenceBuilder();

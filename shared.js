@@ -1,7 +1,3 @@
-/* ============================================================
-   Bible Buzzer — shared config, question bank, helpers
-   ============================================================ */
-
 // 1. Sign up free at https://piesocket.com  →  create an API key
 // 2. Paste your API key + Cluster ID below
 // 3. That's it — no other server setup needed.
@@ -10,16 +6,36 @@ const PIESOCKET_CONFIG = {
   clusterId: "free.blr2",
 };
 
-// Each round: `line` is the scrambled sentence, `title` is revealed after the round.
-// All of these are public-domain hymn lines (1700s–1800s), safe to reuse freely.
-// Add, remove, or edit rounds here — the game just loops through however many you list.
 const SONGS = [
-  { line: "I sing the goodness of the Lord who filled the Earth with food", title: "I Sing the Mighty Power of God" },
-  { line: "Amazing grace how sweet the sound that saved a wretch like me", title: "Amazing Grace" },
-  { line: "Holy holy holy merciful and mighty", title: "Holy, Holy, Holy" },
-  { line: "When peace like a river attendeth my way", title: "It Is Well with My Soul" },
-  { line: "Blessed assurance Jesus is mine oh what a foretaste of glory divine", title: "Blessed Assurance" },
+  { level: "Trial", points: 0, line: "Abide with me fast falls the eventide", title: "Abide with Me" },
+
+  { level: "Easy", points: 1, line: "To God be the glory Great things he hath done", title: "To God Be the Glory" },
+  { level: "Easy", points: 1, line: "Trust and obey for there's no other way", title: "Trust and Obey" },
+  { level: "Easy", points: 1, line: "Give me the Bible Holy message shining", title: "Give Me the Bible" },
+  { level: "Easy", points: 1, line: "I sing the mighty power of God that made the mountains rise", title: "I Sing the Mighty Power of God" },
+
+  { level: "Normal", points: 3, line: "Stand up stand up for Jesus The trumpet call obey", title: "Stand Up! Stand Up for Jesus" },
+  { level: "Normal", points: 3, line: "The Lord in Zion reigneth let all the world rejoice", title: "The Lord in Zion Reigneth" },
+  { level: "Normal", points: 3, line: "Hark the herald angels sing Glory to the new born King", title: "Hark! The Herald Angels Sing" },
+  { level: "Normal", points: 3, line: "There shall be showers of blessing This is the promise of love", title: "Showers of Blessing" },
+  { level: "Normal", points: 3, line: "Wake the song of joy and gladness Hither bring your noblest lays", title: "Wake the Song" },
+
+  { level: "Hard", points: 5, line: "Great is Thy faithfulness O God my Father There is no shadow of turning with Thee", title: "Great Is Thy Faithfulness" },
+  { level: "Hard", points: 5, line: "Blessed assurance Jesus is mine O what a foretaste of glory divine", title: "Blessed Assurance, Jesus Is Mine" },
+  { level: "Hard", points: 5, line: "Lord lift me up and let me stand By faith on heaven's table land", title: "Higher Ground" },
+  { level: "Hard", points: 5, line: "Rescue the perishing care for the dying Jesus is merciful Jesus will save", title: "Rescue the Perishing" },
+  { level: "Hard", points: 5, line: "All hail the power of Jesus' name Let angels prostrate fall", title: "All Hail the Power of Jesus' Name" },
 ];
+
+// Builds a "Easy 2/4 · 1 pt" style label for a given round, used by both the
+// host and player screens so the room always knows the tier, position within
+// it, and what it's worth.
+function levelLabel(song) {
+  const levelSongs = SONGS.filter(s => s.level === song.level);
+  const position = levelSongs.indexOf(song) + 1;
+  const pointsText = song.points > 0 ? `${song.points} pt${song.points === 1 ? "" : "s"}` : "practice";
+  return `${song.level} ${position}/${levelSongs.length} · ${pointsText}`;
+}
 
 const NEXT_ROUND_DELAY_MS = 5000;
 
