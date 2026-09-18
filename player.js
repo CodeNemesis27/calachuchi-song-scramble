@@ -123,7 +123,10 @@ function renderPool() {
 function tapTile(tileId) {
   if (locked) return;
 
-  if (tileId === builtCount) {
+  const tapped = tokens.find(t => t.id === tileId);
+  const expected = tokens[builtCount];
+
+  if (tapped && normalizeWord(tapped.text) === normalizeWord(expected.text)) {
     builtCount++;
     pool = pool.filter(t => t.id !== tileId);
     renderSentenceBuilder();
