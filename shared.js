@@ -14,7 +14,7 @@ const PIESOCKET_CONFIG = {
 // All of these are public-domain hymn lines (1700s–1800s), safe to reuse freely.
 // Add, remove, or edit rounds here — the game just loops through however many you list.
 const SONGS = [
-  { line: "I sing the goodness of the Lord who filled the Earth with food", title: "I Sing the Mighty Power of God" },
+  { line: "I sing the₁ goodness of the₂ Lord who filled the₃ Earth with food", title: "I Sing the Mighty Power of God" },
   { line: "Amazing grace how sweet the sound that saved a wretch like me", title: "Amazing Grace" },
   {
     line: "Abide with me fast falls the eventide The darkness deepens Lord with me abide", title: "Abide With Me"
